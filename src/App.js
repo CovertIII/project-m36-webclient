@@ -1,23 +1,31 @@
 import React, { Component } from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
+import { connect } from 'react-redux';
 import { Header } from './Header';
 import { Content } from './Content';
+
+import { init } from './init.actions';
 import './dashboard.css';
-import { connect, showRelvars } from './services/ws.js';
 
 const AppTemplate = () => ([
   <Header/>,
   <Content/>
 ]);
 
-class App extends Component {
+class AppComponent extends Component {
   componentDidMount(){
-    connect().then( () => showRelvars()).then( data => console.log(data));
+    this.props.init();
   }
   render(){
     return AppTemplate();
   }
 }
+
+export const mapDispatchToProps = dispatch => ({
+  init: () => dispatch(init())
+});
+
+const App = connect(null, mapDispatchToProps)(AppComponent);
 
 
 export default App;
