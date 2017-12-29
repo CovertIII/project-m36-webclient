@@ -8,8 +8,8 @@ import { init } from './init.actions';
 import './dashboard.css';
 
 const AppTemplate = () => ([
-  <Header/>,
-  <Content/>
+  <Header key="header"/>,
+  <Content key="content"/>
 ]);
 
 class AppComponent extends Component {

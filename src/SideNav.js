@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { map, pathOr, pipe } from 'ramda';
 import { viewRelation, viewType } from './route.actions.js';
@@ -10,7 +10,7 @@ const Title = (title) => (
 );
 
 const Item = (title, view, isActive) => (
-  <li className="nav-item">
+  <li key={title} className="nav-item">
     <a className={'nav-link ' + (isActive ? 'active' : '')} onClick={() => view(title)}>{title}</a>
   </li>
 );
