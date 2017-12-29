@@ -39,12 +39,9 @@ const RelationBody = ({ asList: rows })  => (
   </tbody>
 );
 
-export const Relation = (relation) => {
-  console.log(relation);
-  return (
-    <table className="table table-striped">
-      { RelationHeader(relation[0]) }
-      { RelationBody(relation[1]) }
-    </table>
-  )
-};
+export const Relation = (relation) => (
+  <table className="table table-striped">
+    { RelationHeader(relation[0]) }
+    { RelationBody(relation[1]) }
+  </table>
+);

@@ -6,3 +6,10 @@ export const viewRelation = name => ({
     tab: 'header'
   }
 });
+
+export const switchTab = tab => ({
+  type: 'ROUTE_PATCH',
+  payload: {
+    tab
+  }
+});

@@ -16,9 +16,16 @@ export const Console = () => (
   </main>
 );
 
+export const Body = () => (
+  <main role="main" className="col-sm-9 ml-sm-auto col-md-10 pt-3">
+    <div>Body</div>
+  </main>
+);
+
 const PageContainer = ({tab}) => cond([
   [ equals('header'), () => <Schema/> ],
   [ equals('tutd'), () => <Console/> ],
+  [ equals('body'), () => <Body/> ],
   [ T, () => <Empty/> ]
 ])(tab);
 
