@@ -9,7 +9,6 @@ class BodyClass extends Component {
     this.props.getRelvar(this.props.name);
   }
   componentWillReceiveProps(nextProps){
-    console.log('will get props', this.props, nextProps);
     if(nextProps.name !== this.props.name){
       this.props.getRelvar(nextProps.name);
     }

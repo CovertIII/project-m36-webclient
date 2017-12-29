@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { merge } from 'ramda';
+import { merge, cond, append, test } from 'ramda';
 
 const relvars = (state = [], action) => {
   switch(action.type){
@@ -44,8 +44,56 @@ const relvarBodies = (state = {}, action) => {
   }
 };
 
+const findResultType = expr => cond([
+  [ test(/^:show/), () => 'relation' ],
+  [ () => true, () => 'string' ]
+])(expr);
+
+const initConsoleState = {
+  expr: '',
+  history: [
+    ':showexpr true',
+    ':showexpr false',
+    ':importexample date',
+    ':showexpr s join sp',
+    'update s where city="Paris" (status:=10)',
+    ':showexpr s',
+    ':commit',
+    ':showgraph',
+  ],
+  result: '',
+  resultType: 'string'
+};
+
+const tconsole = (state = initConsoleState, action) => {
+  switch(action.type){
+    case 'CONSOLE_CHANGE':
+      return merge(
+        state,
+        { expr: action.payload  }
+      );
+    case 'CONSOLE_RESULT':
+      return merge(
+        state,
+        {
+          result: action.payload.data,
+          resultType: findResultType(action.payload.expr),
+          history: append(action.payload.expr, state.history)
+        }
+      );
+    case 'CONSOLE_ERROR':
+      return merge(
+        state,
+        { result: action.payload.data, resultType: 'string' }
+      );
+    default:
+      return state;
+  }
+};
+
 export const rootReducer = combineReducers({
   relvars,
   route,
-  relvarBodies
+  relvarBodies,
+  tconsole
 });

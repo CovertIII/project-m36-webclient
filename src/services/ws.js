@@ -23,11 +23,11 @@ export const connect = () => new Promise( (res, rej) => {
   };
 });
 
-export const showRelvars = () => new Promise( (res, rej) => {
-  ws.io.send('executetutd::showrelvars');
+export const evaluate = (expr, attr) => new Promise( (res, rej) => {
+  ws.io.send('executetutd:' + expr);
   const fn = data => {
-    if(data.displayrelation){
-      res(data.displayrelation);
+    if(data[attr]){
+      res(data[attr]);
       ws.off(fn);
     } else if(data.displayerror){
       rej(data.displayerror);
@@ -37,16 +37,6 @@ export const showRelvars = () => new Promise( (res, rej) => {
   ws.on(fn);
 });
 
-export const showExpr = expr => new Promise( (res, rej) => {
-  ws.io.send('executetutd::showexpr ' + expr);
-  const fn = data => {
-    if(data.displayrelation){
-      res(data.displayrelation);
-      ws.off(fn);
-    } else if(data.displayerror){
-      rej(data.displayerror);
-      ws.off(fn);
-    }
-  };
-  ws.on(fn);
-});
+export const showRelvars = () => evaluate(':showrelvars', 'displayrelation');
+
+export const showExpr = expr => evaluate(':showexpr ' + expr, 'displayrelation');

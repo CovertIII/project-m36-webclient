@@ -17,7 +17,7 @@ const Link = ({title, isActive, onClick}) => (
 export const HeaderComponent = ({switchTab, tab}) => (
   <header>
     <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a className="navbar-brand" href="#">Dashboard</a>
+      <a className="navbar-brand" href="">Project M36 Client</a>
       <div className="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul className="navbar-nav mr-auto">
           {

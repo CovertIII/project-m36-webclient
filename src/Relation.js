@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ifElse, pipe, prop, pathEq } from 'ramda';
 
+const emptyRelation = [[], {asList: []}];
+
 const AtomType = attr => {
   const atomType = attr[1]['tag'];
   const attrName = attr[0];
@@ -39,7 +41,7 @@ const RelationBody = ({ asList: rows })  => (
   </tbody>
 );
 
-export const Relation = (relation) => (
+export const Relation = (relation = emptyRelation) => (
   <table className="table table-striped">
     { RelationHeader(relation[0]) }
     { RelationBody(relation[1]) }
