@@ -32,7 +32,20 @@ const route = (state = initRoute, action) => {
   }
 };
 
+const relvarBodies = (state = {}, action) => {
+  switch(action.type){
+    case 'SHOW_RELVAR':
+      return merge(
+        state,
+        { [action.payload.name]: action.payload.data }
+      );
+    default:
+      return state;
+  }
+};
+
 export const rootReducer = combineReducers({
   relvars,
-  route
+  route,
+  relvarBodies
 });

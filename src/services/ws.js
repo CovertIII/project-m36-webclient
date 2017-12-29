@@ -29,6 +29,23 @@ export const showRelvars = () => new Promise( (res, rej) => {
     if(data.displayrelation){
       res(data.displayrelation);
       ws.off(fn);
+    } else if(data.displayerror){
+      rej(data.displayerror);
+      ws.off(fn);
+    }
+  };
+  ws.on(fn);
+});
+
+export const showExpr = expr => new Promise( (res, rej) => {
+  ws.io.send('executetutd::showexpr ' + expr);
+  const fn = data => {
+    if(data.displayrelation){
+      res(data.displayrelation);
+      ws.off(fn);
+    } else if(data.displayerror){
+      rej(data.displayerror);
+      ws.off(fn);
     }
   };
   ws.on(fn);

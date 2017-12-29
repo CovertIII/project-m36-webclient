@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { T, cond, equals, prop } from 'ramda';
 
 import { Schema } from './schema/schema.container';
+import { Body } from './body/body.container';
 
 export const Empty = () => (
   <main role="main" className="col-sm-9 ml-sm-auto col-md-10 pt-3">
@@ -13,12 +14,6 @@ export const Empty = () => (
 export const Console = () => (
   <main role="main" className="col-sm-9 ml-sm-auto col-md-10 pt-3">
     <div>TutorialD Console</div>
-  </main>
-);
-
-export const Body = () => (
-  <main role="main" className="col-sm-9 ml-sm-auto col-md-10 pt-3">
-    <div>Body</div>
   </main>
 );
 

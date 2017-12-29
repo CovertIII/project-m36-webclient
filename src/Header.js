@@ -9,7 +9,7 @@ const tabs = [
 ];
 
 const Link = ({title, isActive, onClick}) => (
-  <li className={'nav-item ' + isActive ? 'active' : ''  }>
+  <li className={'nav-item ' + (isActive ? 'active' : '')  }>
     <a className="nav-link" onClick={onClick}>{title}</a>
   </li>
 );
@@ -22,7 +22,7 @@ export const HeaderComponent = ({switchTab, tab}) => (
         <ul className="navbar-nav mr-auto">
           {
             tabs.map( ({id, name}) => (
-              <Link title={name} isActive={false} onClick={() => switchTab(id)}/>
+              <Link key={id} title={name} isActive={tab === id} onClick={() => switchTab(id)}/>
             ))
           }
         </ul>

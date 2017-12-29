@@ -9,17 +9,17 @@ const Title = (title) => (
   </li>
 );
 
-const Item = (title, view) => (
+const Item = (title, view, isActive) => (
   <li className="nav-item">
-    <a className="nav-link" onClick={() => view(title)}>{title}</a>
+    <a className={'nav-link ' + (isActive ? 'active' : '')} onClick={() => view(title)}>{title}</a>
   </li>
 );
 
-const SideNavComponent = ({relvars, viewRelation}) => (
+const SideNavComponent = ({relvars, viewRelation, selectedName}) => (
   <nav className="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
     <ul className="nav nav-pills flex-column">
       { Title('Relvars') }
-      { relvars.map( name => Item(name, viewRelation) ) }
+      { relvars.map( name => Item(name, viewRelation, selectedName === name) ) }
     </ul>
 
     <ul className="nav nav-pills flex-column">
@@ -37,7 +37,8 @@ const mapStateToProps = state => ({
     pathOr([], ['relvars', 1, 'asList']),
     map(pathOr('', [1, 0, 'val']))
   )(state),
-  types: []
+  types: [],
+  selectedName: state.route.name
 });
 
 const mapDispatchToProps = dispatch => ({
