@@ -7,4 +7,6 @@ Right now the websocket connection is hard coded to `wss://try.project-m36.io/ws
 The websocket connection does drop a lot.  Right now you have to
 refresh the page to reconnect.
 
+You can see project here:
 
+https://covertiii.github.io/project-m36-webclient/
