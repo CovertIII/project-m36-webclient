@@ -2,6 +2,7 @@ import { pipeP, cond, test } from 'ramda';
 import {
   connect,
   showRelvars,
+  showTypes,
   showExpr,
   evaluate as evaluateTutD
 } from './services/ws.js';
@@ -9,7 +10,9 @@ import {
 export const init = () => dispatch => pipeP(
   connect,
   showRelvars,
-  data => dispatch({type: 'SHOW_RELVARS', payload: data})
+  data => dispatch({type: 'SHOW_RELVARS', payload: data}),
+  showTypes,
+  data => dispatch({type: 'SHOW_TYPES', payload: data}),
 )();
 
 export const getRelvar = name => dispatch => pipeP(

@@ -37,6 +37,8 @@ export const evaluate = (expr, attr) => new Promise( (res, rej) => {
   ws.on(fn);
 });
 
+export const showTypes = () => evaluate(':showtypes', 'displayrelation');
+
 export const showRelvars = () => evaluate(':showrelvars', 'displayrelation');
 
 export const showExpr = expr => evaluate(':showexpr ' + expr, 'displayrelation');

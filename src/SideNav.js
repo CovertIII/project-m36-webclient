@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { map, pathOr, pipe } from 'ramda';
-import { viewRelation } from './route.actions.js';
+import { viewRelation, viewType } from './route.actions.js';
 
 const Title = (title) => (
   <li className="nav-item">
@@ -15,7 +15,7 @@ const Item = (title, view, isActive) => (
   </li>
 );
 
-const SideNavComponent = ({relvars, viewRelation, selectedName}) => (
+const SideNavComponent = ({types, relvars, viewRelation, selectedName, viewType}) => (
   <nav className="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
     <ul className="nav nav-pills flex-column">
       { Title('Relvars') }
@@ -24,6 +24,7 @@ const SideNavComponent = ({relvars, viewRelation, selectedName}) => (
 
     <ul className="nav nav-pills flex-column">
       { Title('Types') }
+      { types.map( name => Item(name, viewType, selectedName === name) ) }
     </ul>
 
     <ul className="nav nav-pills flex-column">
@@ -37,12 +38,16 @@ const mapStateToProps = state => ({
     pathOr([], ['relvars', 1, 'asList']),
     map(pathOr('', [1, 0, 'val']))
   )(state),
-  types: [],
+  types: pipe(
+    pathOr([], ['types', 1, 'asList']),
+    map(pathOr('', [1, 0, 'val']))
+  )(state),
   selectedName: state.route.name
 });
 
 const mapDispatchToProps = dispatch => ({
-  viewRelation: name => dispatch(viewRelation(name))
+  viewRelation: name => dispatch(viewRelation(name)),
+  viewType: name => dispatch(viewType(name))
 });
 
 export const SideNav = connect(

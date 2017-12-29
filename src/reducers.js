@@ -10,6 +10,15 @@ const relvars = (state = [], action) => {
   }
 };
 
+const types = (state = [], action) => {
+  switch(action.type){
+    case 'SHOW_TYPES':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const initRoute = {
   type: '',
   name: '',
@@ -93,6 +102,7 @@ const tconsole = (state = initConsoleState, action) => {
 
 export const rootReducer = combineReducers({
   relvars,
+  types,
   route,
   relvarBodies,
   tconsole
