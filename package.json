@@ -2,6 +2,7 @@
   "name": "m36-client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://covertiii.github.io/project-m36-webclient",
   "dependencies": {
     "bootstrap": "^4.0.0-beta.2",
     "ramda": "^0.25.0",
@@ -12,12 +13,15 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "gh-pages": "^1.1.0",
     "react-scripts": "1.0.17"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 }
