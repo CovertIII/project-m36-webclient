@@ -1,4 +1,4 @@
-import { pipeP, cond, test } from 'ramda';
+import { pipeP, cond, test, is } from 'ramda';
 import {
   connect,
   showRelvars,
@@ -24,18 +24,13 @@ export const getRelvar = name => dispatch => pipeP(
   data => dispatch({type: 'SHOW_RELVAR', payload: {data, name}})
 )(name);
 
-const findAttrType = expr => cond([
-  [ test(/^:show/), () => 'displayrelation' ],
-  [ () => true, () => 'acknowledged' ]
-])(expr);
-
 export const evaluate = expr => dispatch => pipeP(
-  expr => evaluateTutD(expr, findAttrType(expr)),
-  data => dispatch({type: 'CONSOLE_RESULT', payload: {data, expr, type: findAttrType(expr)}}),
+  expr => evaluateTutD(expr),
+  data => dispatch({type: 'CONSOLE_RESULT', payload: {data, expr}}),
   () => dispatch(getRelvarsAndTypes())
 )(expr).catch( e => {
   console.error(e);
-  dispatch({type: 'CONSOLE_ERROR', payload: {data: e, expr, type: findAttrType(expr)}})
+  dispatch({type: 'CONSOLE_ERROR', payload: {data: e, expr}})
 });
 
 

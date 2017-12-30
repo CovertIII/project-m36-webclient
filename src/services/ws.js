@@ -26,8 +26,11 @@ export const connect = () => new Promise( (res, rej) => {
 export const evaluate = (expr, attr) => new Promise( (res, rej) => {
   ws.io.send('executetutd:' + expr);
   const fn = data => {
-    if(data[attr]){
-      res(data[attr]);
+    if(data.displayrelation){
+      res(data.displayrelation);
+      ws.off(fn);
+    } else if(data.acknowledged){
+      res(JSON.stringify(data));
       ws.off(fn);
     } else if(data.displayerror){
       rej(data.displayerror);
@@ -37,8 +40,8 @@ export const evaluate = (expr, attr) => new Promise( (res, rej) => {
   ws.on(fn);
 });
 
-export const showTypes = () => evaluate(':showtypes', 'displayrelation');
+export const showTypes = () => evaluate(':showtypes');
 
-export const showRelvars = () => evaluate(':showrelvars', 'displayrelation');
+export const showRelvars = () => evaluate(':showrelvars');
 
-export const showExpr = expr => evaluate(':showexpr ' + expr, 'displayrelation');
+export const showExpr = expr => evaluate(':showexpr ' + expr);
