@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ifElse, pipe, prop, pathEq } from 'ramda';
+import { cond, pipe, prop, pathEq } from 'ramda';
 
 const emptyRelation = [[], {asList: []}];
 
@@ -19,19 +19,27 @@ const RelationHeader = header => (
   </thead>
 )
 
-const Atom = (atom) => (
+const Atom = ({atom}) => (
   <span>{
-    ifElse(
-      pathEq(['type', 'tag'], 'RelationAtomType'),
-      pipe(prop('val'), Relation),
-      prop('val')
-    )(atom)
+    cond([
+      [ pathEq(['type', 'tag'], 'RelationAtomType'), pipe(prop('val'), Relation) ],
+      [
+        pathEq(['type', 'tag'], 'ConstructedAtomType'),
+        atom => (
+          <span>
+            <span>{atom.dataconstructorname} </span>
+            { atom.atomlist.map( a => <Atom atom={a}/> ) }
+          </span>
+        )
+      ],
+      [ () => true, prop('val') ]
+    ])(atom)
   }</span>
 )
 
 const RelationBodyRow = row => (
   <tr>
-    { row[1].map( a => (<td> {Atom(a)}</td>)) }
+    { row[1].map( a => (<td><Atom atom={a}/></td>)) }
   </tr>
 );
 

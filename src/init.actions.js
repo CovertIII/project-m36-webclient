@@ -9,6 +9,10 @@ import {
 
 export const init = () => dispatch => pipeP(
   connect,
+  () => dispatch(getRelvarsAndTypes())
+)();
+
+export const getRelvarsAndTypes = () => dispatch => pipeP(
   showRelvars,
   data => dispatch({type: 'SHOW_RELVARS', payload: data}),
   showTypes,
@@ -25,13 +29,14 @@ const findAttrType = expr => cond([
   [ () => true, () => 'acknowledged' ]
 ])(expr);
 
-export const evaluate = expr => dispatch =>
-  evaluateTutD(expr, findAttrType(expr))
-    .then( data => dispatch({type: 'CONSOLE_RESULT', payload: {data, expr, type: findAttrType(expr)}}))
-    .catch( e => {
-      console.error(e);
-      dispatch({type: 'CONSOLE_ERROR', payload: {data: e, expr, type: findAttrType(expr)}})
-    })
+export const evaluate = expr => dispatch => pipeP(
+  expr => evaluateTutD(expr, findAttrType(expr)),
+  data => dispatch({type: 'CONSOLE_RESULT', payload: {data, expr, type: findAttrType(expr)}}),
+  () => dispatch(getRelvarsAndTypes())
+)(expr).catch( e => {
+  console.error(e);
+  dispatch({type: 'CONSOLE_ERROR', payload: {data: e, expr, type: findAttrType(expr)}})
+});
 
 
 export const consoleChange = expr => ({
